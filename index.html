@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sea Freight Shipping</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style type="text/css">
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-[Poppins]">
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-6 shadow-lg animate-fade-in">
+            <div class="container mx-auto px-4">
+                <h1 class="text-3xl font-bold text-center flex items-center justify-center gap-2">
+                    <i class="fas fa-ship"></i> Sea Freight Shipping Details
+                </h1>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-grow container mx-auto px-4 py-8">
+            <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-xl p-6 animate-fade-in">
+                <!-- From Section -->
+                <div class="mb-6 transform hover:scale-[1.01] transition-transform">
+                    <label class="block text-gray-700 text-lg font-semibold mb-2">
+                        <i class="fas fa-location-dot text-blue-600"></i> From
+                    </label>
+                    <input type="text" 
+                           value="No.10, Koonpola Road, Doratiyawa, Piscal Watta, Kurunegala, Sri Lanka" 
+                           readonly 
+                           class="w-full p-3 bg-gray-50 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500">
+                    
+                    <div class="mt-3 space-y-2">
+                        <a href="tel:+19549546469" class="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors">
+                            <i class="fas fa-phone"></i>
+                            <span>+1 (954) 954 6469</span>
+                        </a>
+                        <a href="tel:+94781132477" class="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors">
+                            <i class="fas fa-phone"></i>
+                            <span>+94 78 113 2477</span>
+                        </a>
+                        <a href="tel:+94767963624" class="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors">
+                            <i class="fas fa-phone"></i>
+                            <span>+94 76 796 3624</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- To Section -->
+                <div class="mb-6 transform hover:scale-[1.01] transition-transform">
+                    <label class="block text-gray-700 text-lg font-semibold mb-2">
+                        <i class="fas fa-location-dot text-blue-600"></i> To
+                    </label>
+                    <input type="text" 
+                           value="Aittalahdenkatu 6, 38200 Sastamala, Finland" 
+                           readonly 
+                           class="w-full p-3 bg-gray-50 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500">
+                    
+                    <div class="mt-3">
+                        <a href="tel:+358415746183" class="flex items-center gap-2 text-gray-600 hover:text-blue-600 transition-colors">
+                            <i class="fas fa-phone"></i>
+                            <span>+358 41 5746183</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Shipping Method -->
+                <div class="mb-6 transform hover:scale-[1.01] transition-transform">
+                    <label class="block text-gray-700 text-lg font-semibold mb-2">
+                        <i class="fas fa-truck-fast text-blue-600"></i> Shipping Method
+                    </label>
+                    <input type="text" 
+                           value="Sea Freight" 
+                           readonly 
+                           class="w-full p-3 bg-gray-50 rounded-lg border border-gray-200">
+                </div>
+
+                <!-- Map -->
+                <div class="rounded-lg overflow-hidden shadow-lg mb-6 h-[400px]" id="map"></div>
+
+                <!-- Submit Button -->
+                <button onclick="submitForm()" 
+                        class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold
+                               hover:bg-blue-700 transform hover:scale-[1.02] transition-all
+                               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                    <i class="fas fa-paper-plane mr-2"></i> Confirm Shipping
+                </button>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-gray-900 text-white py-8 mt-8">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center justify-items-center">
+                    <!-- QR Codes -->
+                    <div class="qr-section space-y-4">
+                        <div class="bg-white p-4 rounded-lg transform hover:scale-105 transition-transform">
+                            <h3 class="text-gray-800 font-semibold mb-2">From Location</h3>
+                            <img src="from-qr.png" alt="From QR Code" class="w-32 h-32 mx-auto">
+                        </div>
+                    </div>
+                    <div class="qr-section space-y-4">
+                        <div class="bg-white p-4 rounded-lg transform hover:scale-105 transition-transform">
+                            <h3 class="text-gray-800 font-semibold mb-2">To Location</h3>
+                            <img src="to-qr.png" alt="To QR Code" class="w-32 h-32 mx-auto">
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-8 text-gray-400">
+                    <p>Scan QR codes for detailed location information</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 
