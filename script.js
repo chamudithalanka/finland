@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!mapContainer) return;
 
     // Sastamala, Finland coordinates
-    const sastamalaCenterCoords = [61.3417, 22.9147];  // Updated coordinates for Sastamala
+    const sastamalaCenterCoords = [61.49715825988427, 23.804557384608618];  // Updated coordinates for Sastamala
     
     // Create map instance centered on Sastamala
     const map = L.map('map', {
@@ -26,8 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
         .addTo(map)
         .bindPopup(`
             <strong>Delivery Location:</strong><br>
-            Aittalahdenkatu 6<br>
-            38200 Sastamala<br>
+            Vanha Domus,<br>
+            Vainamoisenkatu 11 6<br>
+            e 178, 33540 Tampere<br>
             Finland
         `)
         .openPopup();
